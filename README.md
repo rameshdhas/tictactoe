@@ -2,4 +2,4 @@
 
 A simple two player tictactoe app built using React Native
 
-![App Preview](screenshots/preview.gif)
+![App Preview](preview.gif)
