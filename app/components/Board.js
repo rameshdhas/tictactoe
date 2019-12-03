@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, TouchableOpacity, Button, Alert } from 'react-native';
+import { Keyboard, StyleSheet, SafeAreaView, Text, View, TouchableOpacity, Button, Alert, Modal } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { TextInput } from 'react-native-paper';
+
 
 export default class Board extends Component {
 
@@ -12,11 +15,19 @@ export default class Board extends Component {
                 [0,0,0],
                 [0,0,0],
             ],
-            lastTap : 0
+            modalVisible: false,
+            lastTap : 0,
+            player1: 'Kirk',
+            player2: 'Spock'
         };
         this.ended = false;
         this.winningCells = [];
         this.initGame = this.initGame.bind(this);
+        this.openSettings = this.openSettings.bind(this);
+    }
+    
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
     }
 
     initGame() {
@@ -26,6 +37,7 @@ export default class Board extends Component {
                 [0,0,0],
                 [0,0,0],
             ],
+            modalVisible: false,
             lastTap : 0
         });
         this.ended = false;
@@ -60,11 +72,11 @@ export default class Board extends Component {
         var sum = this.computeSum();
         if(sum == -3){
             this.ended = true;
-            Alert.alert("Player 1 is the winner!");
+            Alert.alert(this.state.player1 + " is the winner!");
         }
         if(sum == 3){
             this.ended = true;
-            Alert.alert("Player 2 is the winner!");
+            Alert.alert(this.state.player2 + " is the winner!");
         }
     }
 
@@ -105,11 +117,56 @@ export default class Board extends Component {
         return sum;
     }
 
+    openSettings(){
+        this.setState({ modalVisible: true });
+    }
+
     render() {
         return (
+          <SafeAreaView>
           <View style={styles.container}>
+          
+            <Modal animationType="slide" transparent={false} visible={this.state.modalVisible}>
+            <SafeAreaView>
+            
+            <View>
+                    <TouchableOpacity style={{width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}}
+                        onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                        }}>
+                        <Ionicons name="md-close" size={32} color="black" />
+                    </TouchableOpacity>
+            </View>
 
+            <View style={{paddingLeft: 15}}>            
+                <Text style={{color: "#183446", fontSize: 25, fontWeight:'700'}}>Settings</Text>
+
+            <View style={styles.inputContainer}>            
+            
+            <TextInput style={{marginBottom: 20}}
+                mode='outlined'
+                label='Player 1'
+                value={this.state.player1}
+                onChangeText={player1 => this.setState({ player1 })}
+            />
+
+            <TextInput
+                mode='outlined'
+                label='Player 2'
+                value={this.state.player2}
+                onChangeText={player2 => this.setState({ player2 })}
+            />       
+
+            </View>
+
+            </View>
+            
+            
+            </SafeAreaView>
+            </Modal>
+          
             <Text style={{color: "#183446", fontSize: 25, fontWeight:'700'}}>Tic Tac Toe</Text>
+            <Text style={{color: "#183446", fontSize: 16}}> {this.state.player1} vs {this.state.player2} </Text>
             <View style={{paddingTop: 30}} />
 
             <View style={{flexDirection: "row"}}>
@@ -149,9 +206,13 @@ export default class Board extends Component {
             </View>
 
             <View style={{paddingTop: 30}} />
-            <Button color="#333" title="New Game" onPress={this.initGame}/>
+            <Button color="#000" title="New Game" onPress={this.initGame}/>
+            <View style={{paddingTop: 30}} />
+            <Button color="#333" title="Settings" onPress={this.openSettings}/>
+            
 
           </View>
+          </SafeAreaView>
         );
      }
 
@@ -176,7 +237,29 @@ const styles = StyleSheet.create({
 
     greenCell: {
         backgroundColor: '#32CD32'
-    }
+    },
 
+    header: {
+        flex: 1, 
+        flexDirection: 'row',
+        height: 50
+       
+    },
+
+    inputContainer: {
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingRight: 15
+    },
+
+    input: {
+        borderColor: '#CCCCCC',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        height: 50,
+        fontSize: 25,
+        paddingLeft: 20,
+        paddingRight: 20
+      }
 
   });
