@@ -12,7 +12,9 @@ npm install
 
 expo start
 
-This will launch a development server and localhost:19002, with the message Tunnel ready. With options like running Android device/emulator, and run iOS simulator. With support for connection via Tunnel, LAN, and Local.
+This will launch a development server in localhost:19002, with the message Tunnel ready. 
+
+Click iOS simulator in the webpage which will launch the app in ios simulator.
 
 
 
