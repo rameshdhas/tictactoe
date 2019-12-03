@@ -4,7 +4,7 @@ A simple two player tictactoe app built using React Native
 
 To run the app using local expo serve
 
-git clone 
+git clone https://github.com/rameshdhas/tictactoe.git
 
 cd tictactoe
 
