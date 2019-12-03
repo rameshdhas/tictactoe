@@ -13,6 +13,12 @@
       "android",
       "web"
     ],
+    "ios": {
+      "bundleIdentifier": "com.rdhason.tictactoe"
+    },
+    "android": {
+      "package": "com.rdhason.tictactoe"
+    },
     "description": "",
     "orientation": "portrait"
   }
